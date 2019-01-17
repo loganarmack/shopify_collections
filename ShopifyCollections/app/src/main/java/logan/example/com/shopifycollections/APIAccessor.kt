@@ -15,7 +15,10 @@ interface CollectionsInterface {
     fun loadAllCollections(): Call<CollectionsList>
     //specific collection
     @GET("collects.json?page=1&access_token=c32313df0d0ef512ca64d5b336a0d7c6")
-    fun loadCollections(@Query("collection_id") id: Long): Call<CollectionsList>
+    fun loadCollectionProducts(@Query("collection_id") id: Long): Call<ProductIdList>
+    //products
+    @GET("products.json?page=1&access_token=c32313df0d0ef512ca64d5b336a0d7c6")
+    fun loadProducts(@Query("ids") id: String): Call<ProductList>
 }
 
 //initializes the standard api accessor that is used throughout the code

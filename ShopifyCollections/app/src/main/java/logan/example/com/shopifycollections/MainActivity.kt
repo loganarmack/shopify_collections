@@ -1,18 +1,17 @@
 package logan.example.com.shopifycollections
 
 import android.app.ActionBar
-import android.graphics.Movie
+import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.squareup.picasso.Picasso
+import android.widget.Toolbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,11 +25,11 @@ class MainActivity : AppCompatActivity() {
     private var collections = ArrayList<CustomCollection>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-        supportActionBar?.setCustomView(R.layout.custom_actionbar)
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_collections_list)
+        setContentView(R.layout.activity_main)
+
+        val toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = CollectionAdapter(collections) {
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                   if (apiResponse == null) {
                       //Api returned no data but received request
                       progressBar.visibility = View.GONE
-                      Toast.makeText(this@MainActivity, "Failed to load API!", Toast.LENGTH_SHORT).show()
+                      toast("Failed to load API!", this@MainActivity)
                   }
                   //data is loaded successfully
                   else {
@@ -69,26 +68,30 @@ class MainActivity : AppCompatActivity() {
                           collections.add(i)
                       }
                       viewAdapter.notifyDataSetChanged()
+                      findViewById<View>(R.id.shadow).bringToFront()
                   }
               }
               else {
                   //fail
                   progressBar.visibility = View.GONE
-                  Toast.makeText(this@MainActivity, "Unknown error", Toast.LENGTH_SHORT).show()
+                  toast("An unknown error has occurred.", this@MainActivity)
               }
             }
             override fun onFailure(call: Call<CollectionsList>, t: Throwable) {
-                Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
+                toast("${t.javaClass.canonicalName}: ${t.message}", this@MainActivity)
             }
         })
     }
 
     private fun onCollectionClick(collection: CustomCollection) {
-        toast("${collection.title} Clicked")
-
+        val collectionIntent = Intent(this, CollectionActivity::class.java)
+        collectionIntent.putExtra(CollectionActivity.COLLECTION, collection)
+        startActivity(collectionIntent)
     }
 
-    private fun toast(s: String) {
-        Toast.makeText(this@MainActivity, s, Toast.LENGTH_SHORT).show()
+    companion object {
+        fun toast(s: String, context: Context) {
+            Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
+        }
     }
 }

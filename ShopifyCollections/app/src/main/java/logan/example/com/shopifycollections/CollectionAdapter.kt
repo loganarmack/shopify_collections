@@ -25,9 +25,6 @@ class CollectionAdapter(private val collectionsDataset: List<CustomCollection>, 
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.collection_list_element, parent, false) as View
 
-        //set view size, margins, paddings, layout parameters
-
-
         return CollectionViewHolder(itemView)
     }
 
