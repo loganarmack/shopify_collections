@@ -38,6 +38,7 @@ class CollectionActivity : AppCompatActivity() {
         toolbar.setNavigationIcon(R.drawable.back)
         toolbar.setNavigationOnClickListener {
             finish()
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
         }
 
         viewManager = LinearLayoutManager(this)
@@ -56,6 +57,11 @@ class CollectionActivity : AppCompatActivity() {
         collection = intent.getParcelableExtra(COLLECTION)
 
         loadProductIds()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

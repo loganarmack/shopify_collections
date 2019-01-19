@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.collection_list_element.view.*
+import kotlinx.android.synthetic.main.product_list_element.view.*
 
 class ProductAdapter(private val productDataset: List<Product>, private val clickListener: (Product) -> Unit):
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
@@ -15,6 +15,9 @@ class ProductAdapter(private val productDataset: List<Product>, private val clic
         fun bind(product: Product, clickListener: (Product) -> Unit) = with(itemView) {
             title.text = product.title
             image.loadUrl(product.image.src)
+            stock.text = "512 in stock"
+            collection_title.text = "Aerodynamic Collection"
+            collection_image.loadUrl("https://cdn.shopify.com/s/files/1/1000/7970/collections/Aerodynamic_20Cotton_20Keyboard_grande_b213aa7f-9a10-4860-8618-76d5609f2c19.png?v=1545072718")
             setOnClickListener { clickListener(product) }
         }
     }
@@ -22,7 +25,7 @@ class ProductAdapter(private val productDataset: List<Product>, private val clic
     //create new view
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductAdapter.ProductViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.collection_list_element, parent, false) as View
+            .inflate(R.layout.product_list_element, parent, false) as View
 
         return ProductViewHolder(itemView)
     }

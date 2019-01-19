@@ -1,6 +1,5 @@
 package logan.example.com.shopifycollections
 
-import android.app.ActionBar
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -11,7 +10,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import android.widget.Toolbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -87,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         val collectionIntent = Intent(this, CollectionActivity::class.java)
         collectionIntent.putExtra(CollectionActivity.COLLECTION, collection)
         startActivity(collectionIntent)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
     }
 
     companion object {
