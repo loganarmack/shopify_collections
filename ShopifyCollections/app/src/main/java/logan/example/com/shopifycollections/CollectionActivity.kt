@@ -1,5 +1,7 @@
 package logan.example.com.shopifycollections
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -84,6 +87,26 @@ class CollectionActivity : AppCompatActivity() {
         expandedState = !expandedState //alternates state between collapsed/expanded
         val button = findViewById<ImageButton>(R.id.expand_collapse_button)
         val body = findViewById<TextView>(R.id.collection_body)
+
+        //changes maxlines depending on state of expand arrow
+        body.maxLines = if (expandedState) Integer.MAX_VALUE else 1
+
+        //animates expansion/collapsion of body text
+        val startHeight = body.measuredHeight
+        body.measure(View.MeasureSpec.makeMeasureSpec(
+            body.width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        )
+        val endHeight = body.measuredHeight
+        val expandAnimation = ObjectAnimator.ofInt(
+            body,
+            "maxHeight",
+            startHeight,
+            endHeight
+        )
+        expandAnimation.duration = 300
+        expandAnimation.start()
+
         //starts animation to rotate collapse/expand arrow
         button.startAnimation(
             if (expandedState)
@@ -91,26 +114,6 @@ class CollectionActivity : AppCompatActivity() {
             else
                 AnimationUtils.loadAnimation(this, R.anim.rotate_collapse)
         )
-        //starts animation to expand card
-        if (expandedState) {
-            val expandAnimation = ObjectAnimator.ofInt(
-                body,
-                "maxLines",
-                25
-            )
-            expandAnimation.duration = 300
-            expandAnimation.start()
-        }
-        //starts animation to collapse card
-        else {
-            val collapseAnimation = ObjectAnimator.ofInt(
-                body,
-                "maxLines",
-                1
-            )
-            collapseAnimation.duration = 300
-            collapseAnimation.start()
-        }
     }
 
     //adds animation when returning to main activity
