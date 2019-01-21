@@ -4,34 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/lighterGray"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:background="@color/lighterGray">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/product_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/comfortaa_light"
-        android:layout_marginStart="8dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         android:textAlignment="viewStart"
         android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/product_image"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Test Product" />
+        tools:text="Test Product LOOOOONG" />
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/product_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:contentDescription="@string/product_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,11 +43,12 @@
         android:id="@+id/stock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:text="@string/items_in_stock"
         android:textColor="@color/middleGray"
-        app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="x in stock" />
+        app:layout_constraintStart_toStartOf="@+id/product_name"
+        app:layout_constraintTop_toBottomOf="@+id/product_name" />
 
     <TextView
         android:id="@+id/collection_title"
@@ -66,6 +67,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:alpha="0.3"
+        android:contentDescription="@string/collection_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/stock"
         tools:srcCompat="@tools:sample/avatars[3]" />

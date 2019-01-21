@@ -1,5 +1,6 @@
 package logan.example.com.shopifycollections
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +9,32 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.product_list_element.view.*
 
-class ProductAdapter(private val productDataset: List<Product>, private val clickListener: (Product) -> Unit):
-    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+//adapter for the product list recyclerview
+class ProductAdapter(private val productDataset: List<Product>,
+                     private val collection: CustomCollection,
+                     private val context: Context): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
+    //sets content of view
     inner class ProductViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(product: Product, clickListener: (Product) -> Unit) = with(itemView) {
-            title.text = product.title
-            image.loadUrl(product.image.src)
-            stock.text = "512 in stock"
-            collection_title.text = "Aerodynamic Collection"
-            collection_image.loadUrl("https://cdn.shopify.com/s/files/1/1000/7970/collections/Aerodynamic_20Cotton_20Keyboard_grande_b213aa7f-9a10-4860-8618-76d5609f2c19.png?v=1545072718")
-            setOnClickListener { clickListener(product) }
+        fun bind(product: Product) {
+            itemView.product_name.text = product.title
+
+            //sets each element to be correct size while image is loading
+            val params: ViewGroup.LayoutParams = itemView.product_image.layoutParams
+            params.height = product.image.height
+            params.width = product.image.width
+            itemView.product_image.layoutParams = params
+            itemView.product_image.loadUrl(product.image.src)
+
+            //calculates the total stock across all variants of a product
+            var numStock = 0
+            for (i in product.variants) {
+                numStock += i.inventoryQuantity
+            }
+
+            itemView.stock.text = context.getString(R.string.items_in_stock, numStock)
+            itemView.collection_title.text = collection.title
+            itemView.collection_image.loadUrl(collection.image.src)
         }
     }
 
@@ -32,12 +48,13 @@ class ProductAdapter(private val productDataset: List<Product>, private val clic
 
     //replace contents of view
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(productDataset[position], clickListener)
+        holder.bind(productDataset[position])
     }
 
     //return size of dataset
     override fun getItemCount() = productDataset.size
 
+    //sets image from url
     fun ImageView.loadUrl(url: String) {
         Picasso.get()
             .load(url)

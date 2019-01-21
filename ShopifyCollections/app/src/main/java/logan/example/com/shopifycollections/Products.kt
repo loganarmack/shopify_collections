@@ -14,7 +14,7 @@ class Product(var id: Long,
               var body: String,
               var vendor: String,
               var tags: String,
-              var varients: List<Variant>,
+              var variants: List<Variant>,
               var options: List<Option>,
               var image: CollectionImage)
 

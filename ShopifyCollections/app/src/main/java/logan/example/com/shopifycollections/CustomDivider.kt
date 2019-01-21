@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import java.lang.NullPointerException
 
-
+//item decoration for recyclerview that creates a custom divider between each item (from drawable/line_divider)
 class SimpleDividerItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
     private val mDivider: Drawable = ContextCompat.getDrawable(context, R.drawable.line_divider) ?: throw NullPointerException()
 

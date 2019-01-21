@@ -8,14 +8,24 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.collection_list_element.view.*
 
-
+//adapter for the collection list recyclerview
 class CollectionAdapter(private val collectionsDataset: List<CustomCollection>, private val clickListener: (CustomCollection) -> Unit):
     RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
+    //sets content of view
     inner class CollectionViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(collection: CustomCollection, clickListener: (CustomCollection) -> Unit) = with(itemView) {
             title.text = collection.title
+
+            //makes element the correct size while image is loading
+            val params: ViewGroup.LayoutParams = image.layoutParams
+            params.height = collection.image.height
+            params.width = collection.image.width
+            image.layoutParams = params
+
+            //loads image
             image.loadUrl(collection.image.src)
+
             setOnClickListener { clickListener(collection) }
         }
     }

@@ -1,4 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Shopify Collections</string>
     <string name="shopify_logo">Shopify logo</string>
+    <string name="items_in_stock">%1d in stock</string>
+    <string name="collection_image">Collection image</string>
+    <string name="back_button">Back button</string>
+    <string name="expand_collapse_button">Expand/collapse button</string>
+    <string name="product_image">Product image</string>
+    <string name="no_internet">Unable to access the online server. Please check your internet connection and try again.</string>
+    <string name="failed_access_api">Failed to load API!</string>
+    <string name="unknown_error">An unknown error has occurred.</string>
 </resources>

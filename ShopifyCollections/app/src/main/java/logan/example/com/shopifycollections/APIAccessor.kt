@@ -21,7 +21,7 @@ interface CollectionsInterface {
     fun loadProducts(@Query("ids") id: String): Call<ProductList>
 }
 
-//initializes the standard api accessor that is used throughout the code
+//initializes the standard api accessor that is reused throughout the code
 class APIAccessor {
     var apiService: CollectionsInterface
     init {
